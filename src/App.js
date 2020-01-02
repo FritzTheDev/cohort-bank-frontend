@@ -42,7 +42,6 @@ function App() {
         <button
           style={{ backgroundColor: "red" }}
           onClick={() => {
-            console.log("works");
             deleteBranch(branch.id);
           }}
         >
