@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Axios from "axios";
 
 function App() {
   const [branches, setBranches] = useState([]);
@@ -6,34 +7,26 @@ function App() {
   const [address, setAddress] = useState('');
 
   useEffect(() => {
-    fetch("https://staging-cohort-bank.herokuapp.com/branches").then(res => {
-      res.json().then(data => {
-        setBranches(data);
-      });
-    });
+    const getBranches = async () => {
+      const res = await Axios.get('https://staging-cohort-bank.herokuapp.com/branches');
+      setBranches(res.data);
+    }
+    getBranches();
   }, []);
 
-  const deleteBranch = id => {
-    fetch(`https://staging-cohort-bank.herokuapp.com/branches/${id}`, {
-      method: "DELETE"
-    }).then(() =>
-      setBranches(branches.filter(branch => !(branch.id === id)))
-    );
+  const deleteBranch = async (id) => {
+    await Axios.delete(`https://staging-cohort-bank.herokuapp.com/branches/${id}`)
+    setBranches(branches.filter(branch => !(branch.id === id)))
   };
 
-  const createBranch = (event) => {
+  const createBranch = async (event) => {
     event.preventDefault()
-    fetch(`https://staging-cohort-bank.herokuapp.com/branches/`, {
-      method: "POST",
-      body: JSON.stringify({address, name}),
+    const res = await Axios.post(`https://staging-cohort-bank.herokuapp.com/branches/`, JSON.stringify({name, address}), {
       headers: {
         'content-type': 'application/json'
       }
-    }).then(res => {
-      res.json(data => {
-        setBranches([...branches, data]);
-      });
     });
+    setBranches([...branches, res.data]);
   };
   const renderBranches = branchList => {
     return branchList.map(branch => (
