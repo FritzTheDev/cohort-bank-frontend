@@ -13,11 +13,11 @@ function App() {
     });
   }, []);
 
-  const deleteBranch = uid => {
-    fetch(`https://staging-cohort-bank.herokuapp.com/branches/${uid}`, {
+  const deleteBranch = id => {
+    fetch(`https://staging-cohort-bank.herokuapp.com/branches/${id}`, {
       method: "DELETE"
     }).then(() =>
-      setBranches(branches.filter(branch => !(branch.uid === uid)))
+      setBranches(branches.filter(branch => !(branch.id === id)))
     );
   };
 
@@ -37,13 +37,13 @@ function App() {
   };
   const renderBranches = branchList => {
     return branchList.map(branch => (
-      <li key={branch.uid}>
+      <li key={branch.id}>
         {branch.name} - {branch.address} -{" "}
         <button
           style={{ backgroundColor: "red" }}
           onClick={() => {
             console.log("works");
-            deleteBranch(branch.uid);
+            deleteBranch(branch.id);
           }}
         >
           Delete
