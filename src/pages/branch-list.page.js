@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Container, Card, Button, Col, Row } from "react-bootstrap";
 import { getBranches } from "../data/actions/branch.actions";
 
-export const BaseBranchListPage = ({
+const BaseBranchListPage = ({
   loading,
   branches,
   error,
