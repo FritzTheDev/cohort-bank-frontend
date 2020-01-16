@@ -34,6 +34,10 @@ export const BranchPage = () => {
     event.preventDefault();
     setEditModal(false);
     const res = await Axios.put(`https://staging-cohort-bank.herokuapp.com/branches/${editTarget}/`, { editedName, editedAddress });
+    setEditedName("");
+    setEditedAddress("");
+    const otherBranches = branches.filter(branch => branch.id !== editTarget);
+    setBranches([...otherBranches, res.data]);
   }
 
   const deleteBranch = async id => {
