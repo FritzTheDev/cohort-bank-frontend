@@ -9,7 +9,7 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Navigation />
-      <Route path="/" component={HomePage} />
+      <Route path="/login" component={HomePage} />
       <Route path="/branches" component={BranchListPage} />
     </BrowserRouter>
   );
