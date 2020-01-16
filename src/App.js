@@ -8,7 +8,7 @@ export const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Route path="/index" component={} />
+        <Route path="/" component={} />
       </Router>
     </Provider>
   );
