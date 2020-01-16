@@ -15,37 +15,51 @@ export const BranchPage = () => {
 
   useEffect(() => {
     const getBranches = async () => {
-      const res = await Axios.get("https://staging-cohort-bank.herokuapp.com/branches/");
+      const res = await Axios.get(
+        "https://staging-cohort-bank.herokuapp.com/branches/"
+      );
       setBranches(res.data);
-    }
+    };
     getBranches();
-  })
+  });
 
   const createBranch = async event => {
     event.preventDefault();
     setAddModal(false);
-    const res = await Axios.post("https://staging-cohort-bank.herokuapp.com/branches/", { addName, addAddress });
+    const res = await Axios.post(
+      "https://staging-cohort-bank.herokuapp.com/branches/",
+      { addName, addAddress }
+    );
     setAddName("");
     setAddAddress("");
-    setBranches([...branches, res.data ]);
-  }
+    setBranches([...branches, res.data]);
+  };
 
   const updateBranch = async event => {
     event.preventDefault();
     setEditModal(false);
-    const res = await Axios.put(`https://staging-cohort-bank.herokuapp.com/branches/${editTarget}/`, { editedName, editedAddress });
+    const res = await Axios.put(
+      `https://staging-cohort-bank.herokuapp.com/branches/${editTarget}/`,
+      { editedName, editedAddress }
+    );
     setEditedName("");
     setEditedAddress("");
     const otherBranches = branches.filter(branch => branch.id !== editTarget);
     setBranches([...otherBranches, res.data]);
-  }
+  };
 
   const deleteBranch = async id => {
-    await Axios.delete(`https://staging-cohort-bank.herokuapp.com/branches/${id}/`)
+    await Axios.delete(
+      `https://staging-cohort-bank.herokuapp.com/branches/${id}/`
+    );
     setBranches(branches.filter(branch => !(branch.id === id)));
-  }
+  };
 
   return (
-    <Container></Container>
-  )
-}
+    <>
+      {addModal && <AddModal />}
+      {editModal && <EditModal />}
+      <Container></Container>
+    </>
+  );
+};
