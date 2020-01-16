@@ -27,11 +27,11 @@ const BaseLoginPage = ({ logIn }) => {
               <Form onSubmit={event => onSubmit(event)} className="text-center">
                 <Form.Group>
                   <Form.Label>Username</Form.Label>
-                  <Form.Control />
+                  <Form.Control value={username} onChange={e => setUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Password</Form.Label>
-                  <Form.Control />
+                  <Form.Control value={password} onChange={e => setPassword(e.target.value)} />
                 </Form.Group>
                 <Button type="submit">Log in</Button>
               </Form>
