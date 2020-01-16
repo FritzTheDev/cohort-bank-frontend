@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Container, Card } from "react-bootstrap";
 import { getBranches } from "../data/actions/branch.actions";
 
-export const BaseBranchListPage = ({ loading, branches, error, getAllBranches }) => {
-  getAllBranches();
+export const BaseBranchListPage = ({
+  loading,
+  branches,
+  error,
+  getAllBranches
+}) => {
+  useEffect(() => {
+    getAllBranches();
+  }, [getAllBranches]);
+
   return (
     <Container>
-      <Card>
-        <h3 className="text-center">Branches</h3>
-      </Card>
+      <h1 className="text-center m-4">Branches</h1>
     </Container>
   );
 };
@@ -25,7 +31,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllBranches: () => dispatch(getBranches())
-  }
-}
+  };
+};
 
-export const BranchListPage = connect(mapStateToProps, mapDispatchToProps)(BaseBranchListPage);
+export const BranchListPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BaseBranchListPage);
