@@ -11,10 +11,10 @@ export const Navigation = () => (
     <Navbar.Toggle />
     <Navbar.Collapse>
       <Nav>
-      <LinkContainer to="/branches">
-        <Nav.Link>Branches</Nav.Link>
-      </LinkContainer>
+        <LinkContainer to="/branches">
+          <Nav.Link>Branches</Nav.Link>
+        </LinkContainer>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
-)
+);
