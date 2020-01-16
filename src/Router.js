@@ -7,10 +7,10 @@ import { Navigation } from "./components/Navigation";
 
 export const Router = () => {
   return (
-      <BrowserRouter>
-        <Navigation />
-        <Route path="/" component={HomePage} />
-        <Route path="/branches" component={BranchListPage} />
-      </BrowserRouter>
+    <BrowserRouter>
+      <Navigation />
+      <Route path="/" component={HomePage} />
+      <Route path="/branches" component={BranchListPage} />
+    </BrowserRouter>
   );
 };
