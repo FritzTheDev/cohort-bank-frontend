@@ -5,9 +5,7 @@ import Axios from "axios";
 export const BranchPage = () => {
   const [branches, setBranches] = useState([]);
   const [addModal, setAddModal] = useState(false);
-  const [addName, setAddName] = useState("");
-  const [addAddress, setAddAddress] = useState("");
-
+  
   const [editModal, setEditModal] = useState(false);
   const [editTarget, setEditTarget] = useState(null);
   const [editedName, setEditedName] = useState("");
