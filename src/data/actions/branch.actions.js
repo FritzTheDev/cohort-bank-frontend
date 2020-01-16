@@ -13,14 +13,14 @@ const requestBranches = () => {
 const recieveBranches = branches => {
   return {
     type: GET_BRANCHES_SUCCESS,
-    branches
+    payload: branches
   }
 }
 
 const branchesError = message => {
   return {
     type: GET_BRANCHES_FAILURE,
-    message
+    payload: message
   }
 }
 
