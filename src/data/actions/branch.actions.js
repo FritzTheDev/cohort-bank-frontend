@@ -24,9 +24,11 @@ const branchesError = message => {
   }
 }
 
-export const getBranches = () => dispatch => {
+export const getBranches = () => (dispatch, getState) => {
   dispatch(requestBranches());
-  Axios.get('https://staging-cohort-bank.herokuapp.com/branches/')
+  Axios.get('https://staging-cohort-bank.herokuapp.com/api/branches/', { headers: {
+    authorization: `Bearer ${getState().auth.token}`
+  }})
     .then(response => {
       dispatch(recieveBranches(response.data));
     })
