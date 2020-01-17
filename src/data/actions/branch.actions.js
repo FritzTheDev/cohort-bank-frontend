@@ -11,33 +11,69 @@ export const ADD_BRANCH_FAILURE = "ADD_BRANCH_FAILURE";
 const requestBranches = () => {
   return {
     type: GET_BRANCHES_ATTEMPT
-  }
-}
+  };
+};
 
 const receiveBranches = branches => {
   return {
     type: GET_BRANCHES_SUCCESS,
     payload: branches
-  }
-}
+  };
+};
 
 const branchesError = message => {
   return {
     type: GET_BRANCHES_FAILURE,
     payload: message
-  }
-}
+  };
+};
+
+const requestAddBranch = () => {
+  return {
+    type: ADD_BRANCH_ATTEMPT
+  };
+};
+
+const receiveAddBranch = branch => {
+  return {
+    type: ADD_BRANCH_SUCCESS,
+    payload: branch
+  };
+};
+
+const branchAddError = message => {
+  return {
+    type: ADD_BRANCH_FAILURE,
+    payload: message
+  };
+};
 
 export const getBranches = () => (dispatch, getState) => {
   dispatch(requestBranches());
-  Axios.get('https://staging-cohort-bank.herokuapp.com/api/branches/', { headers: {
-    authorization: `Bearer ${getState().auth.token}`
-  }})
+  Axios.get("https://staging-cohort-bank.herokuapp.com/api/branches/", {
+    headers: {
+      authorization: `Bearer ${getState().auth.token}`
+    }
+  })
     .then(response => {
       dispatch(receiveBranches(response.data));
     })
     .catch(error => {
-      console.log(error);
       dispatch(branchesError(error.message));
     });
-}
+};
+
+export const createBranch = (dispatch, getState) => {
+  dispatch(requestAddBranch());
+  Axios.post("https://staging-cohort-bank.herokuapp.com/api/branches/", {
+    headers: {
+      authorization: `Bearer ${getState().auth.token}`
+    }
+  })
+    .then(response => {
+      dispatch(receiveAddBranch(response.data));
+    })
+    .catch(error => {
+      dispatch(branchAddError(error.message));
+    });
+};
