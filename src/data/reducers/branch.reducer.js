@@ -5,9 +5,12 @@ import {
   ADD_BRANCH_ATTEMPT,
   ADD_BRANCH_SUCCESS,
   ADD_BRANCH_FAILURE,
+  EDIT_BRANCH_ATTEMPT,
+  EDIT_BRANCH_SUCCESS,
+  EDIT_BRANCH_FAILURE,
   DELETE_BRANCH_ATTEMPT,
   DELETE_BRANCH_SUCCESS,
-  DELETE_BRANCH_FAILURE
+  DELETE_BRANCH_FAILURE,
 } from "../actions/branch.actions";
 
 const INITIAL_STATE = {
@@ -47,6 +50,20 @@ export const branchReducer = (state = INITIAL_STATE, action) => {
     case ADD_BRANCH_FAILURE:
       return Object.assign({}, state, { addError: action.payload });
 
+    case EDIT_BRANCH_ATTEMPT:
+      // add spinner handling
+      return state;
+    
+    case EDIT_BRANCH_SUCCESS:
+      const otherBranches = state.branches.filter(branch => {
+        return branch.id !== action.payload.id
+      });
+      return Object.assign({}, state, { branches: [...otherBranches, action.payload ]});
+
+    case EDIT_BRANCH_FAILURE:
+      // Add error handling
+      return state;
+    
     case DELETE_BRANCH_ATTEMPT:
       // Add Spinner Handling
       return state;
