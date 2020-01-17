@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Container, Card, Button, Col, Row } from "react-bootstrap";
+import { Container, Card, Button, Col, Row, Modal } from "react-bootstrap";
 import { getBranches } from "../data/actions/branch.actions";
 
 const BaseBranchListPage = ({
@@ -9,6 +9,7 @@ const BaseBranchListPage = ({
   error,
   getAllBranches
 }) => {
+  const [addModal, setAddModal] = useState(false);
   useEffect(() => {
     getAllBranches();
   }, [getAllBranches]);
@@ -37,10 +38,18 @@ const BaseBranchListPage = ({
   };
 
   return (
-    <Container>
-      <h1 className="text-center m-4">Branches</h1>
+    <>
+    <Modal show={addModal} onHide={() => setAddModal(false)}>
+      <Modal.Header>
+        <Modal.Title className="text-center">Add A Branch</Modal.Title>
+      </Modal.Header>
+    </Modal>
+    <Container className="text-center">
+      <h1 className="m-4">Branches</h1>
+      <Button onClick={() => setAddModal(true)}>Add Branch</Button>
       <Row>{!error && !loading && renderBranches()}</Row>
     </Container>
+    </>
   );
 };
 
