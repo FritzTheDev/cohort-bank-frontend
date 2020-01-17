@@ -9,14 +9,15 @@ import {
   Modal,
   Form
 } from "react-bootstrap";
-import { getBranches, createBranch } from "../data/actions/branch.actions";
+import { getBranches, createBranch, deleteBranch } from "../data/actions/branch.actions";
 
 const BaseBranchListPage = ({
   loading,
   branches,
   error,
   getAllBranches,
-  createNewBranch
+  createNewBranch,
+  deleteBranch
 }) => {
   const [addModal, setAddModal] = useState(false);
   const [newBranchName, setNewBranchName] = useState("");
@@ -45,7 +46,7 @@ const BaseBranchListPage = ({
             <Button variant="success" className="mx-2">
               Edit
             </Button>
-            <Button variant="danger" className="mx-2">
+            <Button variant="danger" className="mx-2" onClick={() => deleteBranch(branch.id)}>
               Delete
             </Button>
           </Card.Body>
@@ -56,7 +57,6 @@ const BaseBranchListPage = ({
 
   return (
     <>
-      {/* Add Modal */}
       <Modal show={addModal} onHide={() => setAddModal(false)}>
         <Modal.Header>
           <Modal.Title className="text-center">Add A Branch</Modal.Title>
@@ -102,7 +102,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getAllBranches: () => dispatch(getBranches()),
-    createNewBranch: (name, address) => dispatch(createBranch(name, address))
+    createNewBranch: (name, address) => dispatch(createBranch(name, address)),
+    deleteBranch: (id) => dispatch(deleteBranch(id))
   };
 };
 
