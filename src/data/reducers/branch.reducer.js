@@ -11,7 +11,8 @@ const INITIAL_STATE = {
   loading: false,
   newBranchLoading: false,
   branches: [],
-  error: null
+  error: null,
+  addError: null
 };
 
 export const branchReducer = (state = INITIAL_STATE, action) => {
@@ -41,7 +42,7 @@ export const branchReducer = (state = INITIAL_STATE, action) => {
       });
 
     case ADD_BRANCH_FAILURE:
-      return Object.assign({}, state, { error: action.payload });
+      return Object.assign({}, state, { addError: action.payload });
 
     default:
       return state;
