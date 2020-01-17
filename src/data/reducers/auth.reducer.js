@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 export const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_ATTEMPT:
-      return Object.assign({}, state, { loggingIn: true });
+      return Object.assign({}, state, { loggingIn: true, error: null });
     case LOGIN_SUCCESS:
       return Object.assign({}, state, { loggingIn: false, isAuthenticated: true, token: action.payload });
     case LOGIN_FAILURE:
