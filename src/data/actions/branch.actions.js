@@ -8,6 +8,10 @@ export const ADD_BRANCH_ATTEMPT = "ADD_BRANCH_ATTEMPT";
 export const ADD_BRANCH_SUCCESS = "ADD_BRANCH_SUCCESS";
 export const ADD_BRANCH_FAILURE = "ADD_BRANCH_FAILURE";
 
+export const DELETE_BRANCH_ATTEMPT = "DELETE_BRANCH_ATTEMPT";
+export const DELETE_BRANCH_SUCCESS = "DELETE_BRANCH_SUCCESS";
+export const DELETE_BRANCH_FAILURE = "DELETE_BRANCH_FAILURE";
+
 const requestBranches = () => {
   return {
     type: GET_BRANCHES_ATTEMPT
@@ -48,6 +52,26 @@ const branchAddError = message => {
   };
 };
 
+const requestDeleteBranch = () => {
+  return {
+    type: DELETE_BRANCH_ATTEMPT
+  }
+}
+
+const receiveDeleteBranch = id => {
+  return {
+    type: DELETE_BRANCH_SUCCESS,
+    payload: id
+  }
+}
+
+const branchDeleteError = message => {
+  return {
+    type: DELETE_BRANCH_FAILURE,
+    payload: message
+  }
+}
+
 export const getBranches = () => (dispatch, getState) => {
   dispatch(requestBranches());
   Axios.get("https://staging-cohort-bank.herokuapp.com/api/branches/", {
@@ -63,9 +87,9 @@ export const getBranches = () => (dispatch, getState) => {
     });
 };
 
-export const createBranch = (dispatch, getState) => {
+export const createBranch = (name, address) => (dispatch, getState) => {
   dispatch(requestAddBranch());
-  Axios.post("https://staging-cohort-bank.herokuapp.com/api/branches/", {
+  Axios.post("https://staging-cohort-bank.herokuapp.com/api/branches/", { name, address }, {
     headers: {
       authorization: `Bearer ${getState().auth.token}`
     }
@@ -77,3 +101,18 @@ export const createBranch = (dispatch, getState) => {
       dispatch(branchAddError(error.message));
     });
 };
+
+export const deleteBranch = id => (dispatch, getState) => {
+  dispatch(requestDeleteBranch());
+  Axios.delete(`https://staging-cohort-bank.herokuapp.com/api/branches/${id}/`, {
+    headers: {
+      authorization: `Bearer ${getState().auth.token}`
+    }
+  })
+    .then(response => {
+      dispatch(receiveDeleteBranch(id));
+    })
+    .catch(error => {
+      dispatch(branchDeleteError());
+    })
+}
