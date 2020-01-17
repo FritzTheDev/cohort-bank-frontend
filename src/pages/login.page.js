@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 
 import { login } from "../data/actions/auth.actions";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 const BaseLoginPage = ({ logIn, loggingIn, error, isAuthenticated }) => {
   const [username, setUsername] = useState("");
@@ -14,6 +15,10 @@ const BaseLoginPage = ({ logIn, loggingIn, error, isAuthenticated }) => {
     setUsername("");
     setPassword("");
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/branches" />
+  }
 
   return (
     <Container className="my-5">
