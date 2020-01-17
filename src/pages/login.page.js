@@ -4,16 +4,16 @@ import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { login } from "../data/actions/auth.actions";
 import { connect } from "react-redux";
 
-const BaseLoginPage = ({ logIn }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const BaseLoginPage = ({ logIn, loggingIn, error, isAuthenticated }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const onSubmit = event => {
     event.preventDefault();
     logIn(username, password);
     setUsername("");
     setPassword("");
-  }
+  };
 
   return (
     <Container className="my-5">
@@ -27,13 +27,20 @@ const BaseLoginPage = ({ logIn }) => {
               <Form onSubmit={event => onSubmit(event)} className="text-center">
                 <Form.Group>
                   <Form.Label>Username</Form.Label>
-                  <Form.Control value={username} onChange={e => setUsername(e.target.value)} />
+                  <Form.Control
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                  />
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Password</Form.Label>
-                  <Form.Control value={password} onChange={e => setPassword(e.target.value)} />
+                  <Form.Control
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
                 </Form.Group>
                 <Button type="submit">Log in</Button>
+                <Card.Text style={{ color: 'red'}} className="mt-4">{error}</Card.Text>
               </Form>
             </Card.Body>
           </Card>
@@ -43,10 +50,18 @@ const BaseLoginPage = ({ logIn }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    loggingIn: state.auth.loggingIn,
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     logIn: (username, password) => dispatch(login(username, password))
-  }
-}
+  };
+};
 
-export const LoginPage = connect(null, mapDispatchToProps)(BaseLoginPage)
+export const LoginPage = connect(mapStateToProps, mapDispatchToProps)(BaseLoginPage);
