@@ -40,6 +40,7 @@ const BaseLoginPage = ({ logIn, loggingIn, error, isAuthenticated }) => {
                 <Form.Group>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
+                    type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                   />
