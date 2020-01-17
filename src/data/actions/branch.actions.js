@@ -8,6 +8,10 @@ export const ADD_BRANCH_ATTEMPT = "ADD_BRANCH_ATTEMPT";
 export const ADD_BRANCH_SUCCESS = "ADD_BRANCH_SUCCESS";
 export const ADD_BRANCH_FAILURE = "ADD_BRANCH_FAILURE";
 
+export const EDIT_BRANCH_ATTEMPT = "EDIT_BRANCH_ATTEMPT";
+export const EDIT_BRANCH_SUCCESS = "EDIT_BRANCH_SUCCESS";
+export const EDIT_BRANCH_FAILURE = "EDIT_BRANCH_FAILURE";
+
 export const DELETE_BRANCH_ATTEMPT = "DELETE_BRANCH_ATTEMPT";
 export const DELETE_BRANCH_SUCCESS = "DELETE_BRANCH_SUCCESS";
 export const DELETE_BRANCH_FAILURE = "DELETE_BRANCH_FAILURE";
@@ -51,6 +55,26 @@ const branchAddError = message => {
     payload: message
   };
 };
+
+const requestEditBranch = () => {
+  return {
+    type: EDIT_BRANCH_ATTEMPT
+  }
+}
+
+const receiveEditBranch = branch => {
+  return {
+    type: EDIT_BRANCH_SUCCESS,
+    payload: branch
+  }
+}
+
+const branchEditError = message => {
+  return {
+    type: EDIT_BRANCH_FAILURE,
+    payload: message
+  }
+}
 
 const requestDeleteBranch = () => {
   return {
@@ -101,6 +125,21 @@ export const createBranch = (name, address) => (dispatch, getState) => {
       dispatch(branchAddError(error.message));
     });
 };
+
+export const editBranch = (name, address, id) => (dispatch, getState) => {
+  dispatch(requestEditBranch());
+  Axios.put(`https://staging-cohort-bank.herokuapp.com/api/branches/${id}`, { name, address}, {
+    headers: {
+      authorization: `Bearer ${getState().auth.token}`
+    }
+  })
+    .then(response => {
+      dispatch(receiveEditBranch(response.data));
+    })
+    .catch(error => {
+      dispatch(branchEditError(error.message));
+    })
+}
 
 export const deleteBranch = id => (dispatch, getState) => {
   dispatch(requestDeleteBranch());
