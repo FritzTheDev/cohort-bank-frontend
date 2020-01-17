@@ -128,7 +128,7 @@ export const createBranch = (name, address) => (dispatch, getState) => {
 
 export const editBranch = (name, address, id) => (dispatch, getState) => {
   dispatch(requestEditBranch());
-  Axios.put(`https://staging-cohort-bank.herokuapp.com/api/branches/${id}`, { name, address}, {
+  Axios.put(`https://staging-cohort-bank.herokuapp.com/api/branches/${id}/`, { name, address}, {
     headers: {
       authorization: `Bearer ${getState().auth.token}`
     }
